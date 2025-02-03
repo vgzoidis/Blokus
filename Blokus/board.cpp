@@ -129,3 +129,71 @@ Board* Board::deepCopy() {
     }
     return board;
 }
+
+bool Board::pieceCanBePlaced(Piece* piece, int x, int y) {
+    // Check that first piece touches square (4, 4) for player 1(#) or square (9, 9) for player 2(O)
+    char player = piece->getPlayer();
+    if (playerHasPlacedNoPieces(player)) {
+        for(int i = 0; i < piece->getSizeX(); i++) {
+            for(int j = 0; j < piece->getSizeY(); j++) {
+                if (piece->squareHasPiece(i, j)) {
+                    if (player == '#' && x + i == 4 && y + j == 4)
+                        return true;
+                    else if (player == 'O' && x + i == 9 && y + j == 9)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Check all other conditions
+    bool touchesAtLeastOneCorner = false;
+    for(int i = 0; i < piece->getSizeX(); i++) {
+        for(int j = 0; j < piece->getSizeY(); j++) {
+            if (piece->squareHasPiece(i, j)) {
+                // Check if any part of the piece is out of bounds
+                if (x + i < 0 || x + i > 13 || y + j < 0 || y + j > 13)
+                    return false;
+                // Check that piece does not fall on top of any other piece
+                if (squares[x + i][y + j]->hasPiece())
+                    return false;
+                // Check that piece does not touch any other piece of the same player edge-by-edge
+                if (   (x + i - 1 >= 0  && squares[x + i - 1][y + j]->hasPiece(player))
+                        || (x + i + 1 <= 13 && squares[x + i + 1][y + j]->hasPiece(player))
+                        || (y + j - 1 >= 0  && squares[x + i][y + j - 1]->hasPiece(player))
+                        || (y + j + 1 <= 13 && squares[x + i][y + j + 1]->hasPiece(player))
+                   )
+                    return false;
+                // Check that piece touches at least one corner with any other piece of the same player
+                if (   (x + i - 1 >= 0  && y + j - 1 >= 0  && squares[x + i - 1][y + j - 1]->hasPiece(player))
+                        || (x + i - 1 >= 0  && y + j + 1 <= 13 && squares[x + i - 1][y + j + 1]->hasPiece(player))
+                        || (x + i + 1 <= 13 && y + j - 1 >= 0  && squares[x + i + 1][y + j - 1]->hasPiece(player))
+                        || (x + i + 1 <= 13 && y + j + 1 <= 13 && squares[x + i + 1][y + j + 1]->hasPiece(player))
+                   )
+                    touchesAtLeastOneCorner = true;
+            }
+        }
+    }
+    return touchesAtLeastOneCorner;
+}
+
+int Board::computeScore(Player* player){
+    // Measure how many squares have been played from the player
+    int score = 0;
+    for (int i = 0; i < boardSizeX; i++) {
+        for (int j = 0; j < boardSizeY; j++) {
+            if (squareBelongsToPlayer(i, j, player))
+                score++;
+        }
+    }
+
+    // Check if player has played all pieces
+    if (player->getNumberOfAvailablePieces() == 0){
+        score += 15;
+        // Check if the last piece played by player is the first piece
+        if (getLastPiecePlayedByPlayer(player)->getId() == 1)
+            score += 5;
+    }
+    return score;
+}

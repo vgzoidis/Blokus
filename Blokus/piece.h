@@ -144,7 +144,7 @@ public:
     void flipPiece();
 
     /**
-     * Returns a string representation of this piece. It is a 5 x 5 area of chars, where each char denotes whether
+     * Returns a string representation of this piece. It is an area of chars, where each char denotes whether
      * the square is unoccupied ('-'), belongs to the first player ('#') or to the second player ('O').
      *
      * @return the piece as a string.

@@ -113,7 +113,7 @@ string Piece::toString() {
     }
     string result = sstm.str();
     return result;
-};
+}
 
 Piece* Piece::deepCopy(){
     Square*** newSquares = new Square**[sizeX];

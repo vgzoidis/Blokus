@@ -1,39 +1,42 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
-#include "player.h"
+#include "game.h"
 
 using namespace std;
 
 int main() {
     // Uncomment the following line to make the moves random
-    srand(time(NULL));
+     srand(time(NULL));
 
     // Initialize the game objects
     Board* board = new Board();
     Player** players = new Player*[2];
-    players[0] = new ComputerPlayer(0);
+    Game* game = new Game(board, players);
+
+    // Initialize players
+    players[0] = new SmartPlayer(0);
     players[1] = new ComputerPlayer(1);
+    //players[0] = new ComputerPlayer(0); players[1] = new SmartPlayer(1);
+    players[0]->setOpponent(players[1]);
+    players[1]->setOpponent(players[0]);
 
-    int playerTurn = 0;
+    int playerTurn = game->getPlayerTurn();
     do {
-        cout << endl << "Board:" << endl << board->toString();
-        players[playerTurn]->printAvailablePieces();
+        cout << "Turn of " << players[playerTurn]->getName() << " - ";
+        game->printState();
 
-        if (players[playerTurn]->canPlaceAnyPiece(board)) {
-            // Determine and play the next move
-            Move* pmove = ((ComputerPlayer*)players[playerTurn])->placePiece(board);
-            board->placePiece(pmove->getPiece(), pmove->getX(), pmove->getY(), pmove->getOrientation(), pmove->getFlip());
-            delete pmove;
+        if (!game->makeMove()){
+            cout << "Error in move of player " << players[playerTurn]->getName() << "! Exiting..." << endl;
+            std::exit(0);
         }
 
-        playerTurn = 1 - playerTurn;
+        game->endTurn();
+        playerTurn = game->getPlayerTurn();
         // Uncomment the following line to add a delay
-        for(int i = 0; i < 100000000; i++);
-    } while(players[0]->canPlaceAnyPiece(board) || players[1]->canPlaceAnyPiece(board));
-    cout << endl << "Board:" << endl << board->toString();
-    players[0]->printAvailablePieces();
-    players[1]->printAvailablePieces();
+        // for(int i = 0; i < 100000000; i++);
+    } while(game->playersCanPlaceAnyPiece());
+    game->printState();
 
     // Print the winner and the final score of the game
     int player1points = board->computeScore(players[0]);
@@ -45,10 +48,12 @@ int main() {
     else
         cout << "It's a draw! (Score: " << player1points << " - " << player2points << ")" << endl;
 
-    delete board;
+    // Delete all objects
+    delete game;
     for (int i = 0; i < 2; i++)
         delete players[i];
     delete[] players;
+    delete board;
 
     return 0;
 }

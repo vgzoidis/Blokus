@@ -17,8 +17,8 @@ private:
 
 public:
     /**
-     * Initializes a move setting its piece to be placed, the coordinates for the upper left square of the piece, the orientation,
-     * and the flip of the piece to the values given as parameters.
+     * Initializes a move setting its piece to be placed, the coordinates for the upper left square of
+     * the piece, the orientation, and the flip of the piece to the values given as parameters.
      *
      * @param piece the piece that is placed.
      * @param x the row of the upper left square of the move.
@@ -27,6 +27,14 @@ public:
      * @param flip the flip of the piece that is placed.
      */
     Move(Piece* piece, int x, int y, Orientation orientation, Flip flip);
+
+    /**
+     * Initializes a move setting its elements to those of the one given. This method practically copies
+     * the move, however the piece should not be copied.
+     *
+     * @param move the move to be copied to this move.
+     */
+    Move(Move* amove);
 
     /**
      * Sets the piece of this move to the one given.
@@ -69,6 +77,13 @@ public:
      * @return the flip of the piece of the move.
      */
     Flip getFlip();
+
+    /**
+     * Returns a string representation of this move. It contains all the elements of the move.
+     *
+     * @return the move as a string.
+     */
+    string toString();
 };
 
 #endif // MOVE_H

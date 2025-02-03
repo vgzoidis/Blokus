@@ -1,110 +1,86 @@
 # depslib dependency file v1.0
-1652092037 source:c:\users\billz\onedrive\desktop\blokus\blokus\board.cpp
+1653516440 source:c:\users\billz\onedrive\desktop\blokus\blokus\board.cpp
 	<iostream>
 	<cstdlib>
 	"board.h"
 	"player.h"
 
-1652167798 c:\users\billz\onedrive\desktop\blokus\blokus\board.h
+1653514948 c:\users\billz\onedrive\desktop\blokus\blokus\board.h
 	<string>
 	"piece.h"
 
-1652083365 c:\users\billz\onedrive\desktop\blokus\blokus\piece.h
+1652253729 c:\users\billz\onedrive\desktop\blokus\blokus\piece.h
 	"square.h"
 
 1651873045 c:\users\billz\onedrive\desktop\blokus\blokus\square.h
 	<sstream>
 
-1653397998 c:\users\billz\onedrive\desktop\blokus\blokus\player.h
+1653559884 c:\users\billz\onedrive\desktop\blokus\blokus\player.h
 	<string>
 	"move.h"
 	"piece.h"
 	"board.h"
 
-1651873120 c:\users\billz\onedrive\desktop\blokus\blokus\move.h
+1652255407 c:\users\billz\onedrive\desktop\blokus\blokus\move.h
 	"piece.h"
 
-1653680267 source:c:\users\billz\onedrive\desktop\blokus\blokus\boardrules.cpp
-	"board.h"
+1654701562 source:c:\users\billz\onedrive\desktop\blokus\blokus\computerplayer.cpp
+	"player.h"
+	"algorithms.h"
+
+1654618429 c:\users\billz\onedrive\desktop\blokus\blokus\algorithms.h
+	<iostream>
+	<cstdlib>
+
+1652361582 source:c:\users\billz\onedrive\desktop\blokus\blokus\game.cpp
+	<iomanip>
+	<iostream>
+	"game.h"
+
+1653516607 c:\users\billz\onedrive\desktop\blokus\blokus\game.h
+	"player.h"
+	"smartplayer.h"
+
+1654609134 c:\users\billz\onedrive\desktop\blokus\blokus\smartplayer.h
 	"player.h"
 
-1653672412 source:c:\users\billz\onedrive\desktop\blokus\blokus\main.cpp
-	<ctime>
-	<cstdlib>
+1652189384 source:c:\users\billz\onedrive\desktop\blokus\blokus\humanplayer.cpp
 	<iostream>
 	"player.h"
 
-1651848069 source:c:\users\billz\onedrive\desktop\blokus\blokus\move.cpp
+1652255457 source:c:\users\billz\onedrive\desktop\blokus\blokus\move.cpp
 	"move.h"
 
-1652083388 source:c:\users\billz\onedrive\desktop\blokus\blokus\piece.cpp
+1653559919 source:c:\users\billz\onedrive\desktop\blokus\blokus\piece.cpp
 	<iostream>
 	"piece.h"
 
-1653680626 source:c:\users\billz\onedrive\desktop\blokus\blokus\playerpieces.cpp
-	<iomanip>
+1653560086 source:c:\users\billz\onedrive\desktop\blokus\blokus\player.cpp
+	<iostream>
 	<cstdlib>
+	"player.h"
+
+1653563378 source:c:\users\billz\onedrive\desktop\blokus\blokus\playerpieces.cpp
+	<iomanip>
 	<iostream>
 	"player.h"
+
+1652824801 source:c:\users\billz\onedrive\desktop\blokus\blokus\randomplayer.cpp
+	<cstdlib>
+	"player.h"
+	"algorithms.h"
 
 1651873041 source:c:\users\billz\onedrive\desktop\blokus\blokus\square.cpp
 	<iostream>
 	"square.h"
 
-1653681662 source:c:\users\billz\onedrive\desktop\blokus\blokus\player.cpp
-	<iostream>
-	<cstdlib>
-	"player.h"
-
-1652092037 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\board.cpp
-	<iostream>
-	<cstdlib>
-	"board.h"
-	"player.h"
-
-1652167798 c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\board.h
-	<string>
-	"piece.h"
-
-1652083365 c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\piece.h
-	"square.h"
-
-1651873045 c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\square.h
-	<sstream>
-
-1653397998 c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\player.h
-	<string>
-	"move.h"
-	"piece.h"
-	"board.h"
-
-1651873120 c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\move.h
-	"piece.h"
-
-1653680267 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\boardrules.cpp
-	"board.h"
-	"player.h"
-
-1653672412 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\main.cpp
+1654701512 source:c:\users\billz\onedrive\desktop\blokus\blokus\main.cpp
 	<ctime>
 	<cstdlib>
 	<iostream>
-	"player.h"
+	"game.h"
 
-1651848069 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\move.cpp
-	"move.h"
-
-1652083388 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\piece.cpp
-	<iostream>
-	"piece.h"
-
-1653680626 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\playerpieces.cpp
-	<iomanip>
-	<cstdlib>
-	<iostream>
-	"player.h"
-
-1651873041 source:c:\users\billz\onedrive\desktop\ΤΗΜΜΥ\Αντικειμενοστραφής Προγραμματισμός\blokus palio, ligo pio kainourgio omws\blokus\square.cpp
-	<iostream>
-	"square.h"
+1654701528 source:c:\users\billz\onedrive\desktop\blokus\blokus\smartplayer.cpp
+	"smartplayer.h"
+	"algorithms.h"
 

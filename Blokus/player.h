@@ -13,10 +13,12 @@ class Player {
 private:
     int id;
     char symbol;
+
 protected:
     string name;
     int numPieces; // the number of pieces of the player (initialized to 21)
     Piece** pieces; // the pieces of the player
+    Player* opponent; // the opponent of the player
 
 public:
     /**
@@ -30,7 +32,14 @@ public:
     /**
      * Deletes this player by deleting the array of pieces.
      */
-    ~Player();
+    virtual ~Player();
+
+    /**
+     * Sets the opponent of the player to the one given.
+     *
+     * @param player the opponent of this player.
+     */
+    void setOpponent(Player* player);
 
     /**
      * Returns the id of the player.
@@ -77,7 +86,38 @@ public:
      */
     int getNumberOfAvailablePieces();
 
-    /// THE METHODS OF PLAYER BELOW THIS POINT ARE IMPLEMENTED IN FILE playerpieces.cpp
+    /**
+     * Receives the current state of the board and returns a move.
+     *
+     * This method has to be implemented from all derived classes of Player.
+     *
+     * @return an object of type Move containing a piece, its position, its orientation, and its flip.
+     */
+    virtual Move* makeMove(Board* board) = 0;
+
+    /**
+     * Returns the possible moves for any piece, so that it is placed in any square of the board,
+     * any orientation and any flip. The moves are returned as a dynamic Move array (Move**, i.e. array
+     * of Move* objects) and their number (i.e. the size of the array) is returned as a function parameter.
+     *
+     * @param board the board to check where any piece can be placed.
+     * @param numPossibleMoves the number of possible moves, used as a return parameter.
+     * @return the possible moves for any piece (and their number as a parameter).
+     */
+    Move** getPossibleMoves(Board* board, int& numPossibleMoves);
+
+    /**
+     * Returns the possible moves for the given piece, so that it is placed in any square of the board,
+     * any orientation and any flip. The moves are returned as a dynamic Move array (Move**, i.e. array
+     * of Move* objects) and their number (i.e. the size of the array) is returned as a function parameter.
+     *
+     * @param board the board to check where the piece can be placed.
+     * @param piece the piece to check where it can be placed.
+     * @param numPossibleMoves the number of possible moves of the piece, used as a return parameter.
+     * @return the possible moves for the given piece (and their number as a parameter).
+     */
+    Move** getPossibleMoves(Board* board, Piece* piece, int& numPossibleMoves);
+
     /**
      * Checks if the player can place the given piece in any square of the board, any orientation and any flip.
      *
@@ -101,6 +141,36 @@ public:
      * print the pieces side by side.
      */
     void printAvailablePieces();
+
+    /**
+     * Returns a copy of this player. The copy contains a new array of pieces that has the same values as the
+     * pieces of this player. After calling this function, it is important to delete the newly created player.
+     *
+     * @return a new player that is a copy of this player.
+     */
+    Player* deepCopy();
+
+    /**
+     * Evaluates the state of the board that is given and provides a score. This method returns always zero
+     * and can be extended if desired by the derived classes.
+     *
+     * @param board the board of the game to evaluate its state.
+     * @return the score of the board as an integer.
+     */
+    virtual int evaluateBoard(Board* board);
+
+protected:
+    /**
+     * Evaluates a potential move of the player when it is played on the given board. This method
+     * creates copies of the board and the move in order to avoid changing the original objects and
+     * calls the evaluateBoard method upon making the move. This method can be extended if desired by
+     * the derived classes.
+     *
+     * @param board the board of the game to evaluate the move.
+     * @param amove the move to be evaluated on the board.
+     * @return the score of the move as an integer.
+     */
+    virtual int evaluateMove(Board* board, Move* amove);
 
 private:
     /**
@@ -139,46 +209,60 @@ public:
      */
     HumanPlayer(int id, string name);
 
-    /// THE METHODS OF HUMANPLAYER BELOW THIS POINT ARE IMPLEMENTED IN FILE playerpieces.cpp
     /**
      * Receives the current state of the board and returns a move. A move contains the piece
      * to be placed on the board, its position (x, y), its orientation, and its flip.
      * The information of the move is read by the console.
      *
-     * @return an object of type Move containing a piece, its position, its orientation, and its flip..
+     * @return an object of type Move containing a piece, its position, its orientation, and its flip.
      */
-    Move* placePiece(Board* board);
+    Move* makeMove(Board* board);
 };
 
 /**
  * Class that implements a computer player that plays randomly.
  */
-class ComputerPlayer : public Player {
+class RandomPlayer : public Player {
 public:
     /**
-     * Returns a random id for a piece of the player. Pieces have ids from 1 to 21, so this method
-     * returns an integer from 1 to 21 (including 1 and including 21).
+     * Initializes a random player calling the constructor of the computer player.
      *
-     * @return a random id for a piece of the player between 1 and 21.
+     * @param id the id of the player.
      */
-    int getRandomPieceId();
+    RandomPlayer(int id);
 
     /**
-     * Returns a random orientation value for a piece of the player. Orientation values can be
-     * UP, RIGHT, DOWN, LEFT so this method returns an orientation among these four.
+     * Receives the current state of the board and returns a random move. A move contains the piece
+     * to be placed on the board, its position (x, y), its orientation, and its flip.
      *
-     * @return a random orientation value among UP, RIGHT, DOWN, and LEFT.
+     * Step-by-step explanation:
+     * - We find all possible moves of the player and store them in an array (using method getPossibleMoves).
+     * - We shuffle the array (using the shuffle function).
+     * - We choose the move to play (and create it using the Move(Move) constructor) that is in the first position.
+     * - We delete the possible moves.
+     *
+     * @return an object of type Move containing a piece, its position, its orientation, and its flip.
      */
-    Orientation getRandomOrientation();
+    Move* makeMove(Board* board);
+};
 
+/**
+ * Class that implements a computer player.
+ */
+class ComputerPlayer : public Player {
+protected:
     /**
-     * Returns a random flip value for a piece of the player. Flip values can be NO, YES
-     * so this method returns a flip between these two values.
+     * Evaluates the state of the board that is given and provides a score. The score is calculated as
+     * the number of squares of the board that are occupied by the player minus the number of squares
+     * occupied by the opponent.
      *
-     * @return a random flip value between NO and YES.
+     * Hint: this method can call the squareBelongsToPlayer method of class Board.
+     *
+     * @param board the board of the game to evaluate its state.
+     * @return the score of the board (number of player squares minus number of opponent squares) as an integer.
      */
-    Flip getRandomFlip();
-
+    int evaluateBoard(Board* board);
+public:
     /**
      * Initializes a computer player calling the constructor of the player.
      *
@@ -186,14 +270,21 @@ public:
      */
     ComputerPlayer(int id);
 
-    /// THE METHODS OF COMPUTERPLAYER BELOW THIS POINT ARE IMPLEMENTED IN FILE playerpieces.cpp
     /**
-     * Receives the current state of the board and returns a random move. A move contains the piece
-     * to be placed on the board, its position (x, y), its orientation, and its flip.
+     * Receives the current state of the board and returns the move that has the best score according to
+     * the evaluateMove function. A move contains the piece to be placed on the board, its position (x, y),
+     * its orientation, and its flip.
      *
-     * @return an object of type Move containing a piece, its position, its orientation, and its flip..
+     * Step-by-step explanation:
+     * - We find all possible moves of the player and store them in an array (using method getPossibleMoves).
+     * - We create an array of integers and store the scores of the possible moves (calculated using the evaluateMove method).
+     * - We choose the move to play (and create it using the Move(Move) constructor) that has the maximum score
+     *   (using the getElementWithMaxScore function).
+     * - We delete the possible moves and the scores.
+     *
+     * @return an object of type Move containing a piece, its position, its orientation, and its flip.
      */
-    Move* placePiece(Board* board);
+    Move* makeMove(Board* board);
 };
 
 #endif // PLAYER_H

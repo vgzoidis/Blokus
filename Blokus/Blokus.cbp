@@ -31,9 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="algorithms.h" />
 		<Unit filename="board.cpp" />
 		<Unit filename="board.h" />
-		<Unit filename="boardrules.cpp" />
+		<Unit filename="computerplayer.cpp" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="humanplayer.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="move.cpp" />
 		<Unit filename="move.h" />
@@ -42,6 +46,9 @@
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="playerpieces.cpp" />
+		<Unit filename="randomplayer.cpp" />
+		<Unit filename="smartplayer.cpp" />
+		<Unit filename="smartplayer.h" />
 		<Unit filename="square.cpp" />
 		<Unit filename="square.h" />
 		<Extensions>
